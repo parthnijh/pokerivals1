@@ -27,9 +27,11 @@ function PokeRivals() {
     }, []);
 
     return(
+        
 
     
     <div>
+        
        {
         pokemons.map((pokemon)=>(
             <div className='grid grid-rows-3 grid-flow-col gap-4'>
