@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Background from "./Background";
 import PokeRivals from "./PokeRivals";
 
-function PokemonSelection({handleClick,setPassedImg}) {
+function PokemonSelection({handleClick,setPassedImg,setEnemyPokeImg}) {
     const [pokemons, setPokemons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     
@@ -40,6 +40,14 @@ function PokemonSelection({handleClick,setPassedImg}) {
         fetchPoke();
     }, []);
    
+    useEffect(() => {
+        if (pokemons.length > 0) {
+            let compPoke = Math.floor(Math.random() * pokemons.length);
+            setEnemyPokeImg(pokemons[compPoke].img);
+        }
+    }, [pokemons]);  // Runs when pokemons array is updated
+    
+    
     
     return (
         <div className="flex flex-col items-center bg-gradient-to-b from-red-600 via-yellow-400 to-blue-600 min-h-screen p-6 text-white">
@@ -73,7 +81,9 @@ function PokemonSelection({handleClick,setPassedImg}) {
             }
 
             {/* Pokémon Grid */}
-            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4">
+               
+            
                 {pokemons.map((pokemon) => (
                     <button
                         key={pokemon.name}

@@ -7,6 +7,7 @@ import { useState } from 'react';
 function App() {
   const [step, setStep] = useState(0);
   const [passedimg, setPassedImg] = useState(null);
+  const[enemypokeimg,setEnemyPokeImg]=useState(null);
   const[bgindex,setBgindex]=useState(0);
   
 
@@ -19,10 +20,10 @@ function App() {
       {step >= 1 && step < 2 && <Background handleClick={handleClick} setBgindex={setBgindex} />} 
       
       {step === 0 && (
-        <PokemonSelection handleClick={handleClick} setPassedImg={setPassedImg}  /> 
+        <PokemonSelection handleClick={handleClick} setPassedImg={setPassedImg} setEnemyPokeImg={setEnemyPokeImg} /> 
       )}
 
-      {step >= 2 && <PokeRivals sprites={passedimg} bgindex={bgindex}/>}
+    {step >= 2 && <PokeRivals sprites={passedimg} bgindex={bgindex} enemysprite={enemypokeimg}/>}
     </div>
   );
 }
