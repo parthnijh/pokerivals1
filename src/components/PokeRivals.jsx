@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import Background from "./Background";
 
-function PokeRivals() {
+function PokeRivals({handleClick}) {
     const [pokemons, setPokemons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
+    
 
     useEffect(() => {
         const fetchPoke = async () => {
@@ -10,6 +12,9 @@ function PokeRivals() {
                 const response = await fetch(`https://pokeapi.co/api/v2/generation/1/`);
                 const data = await response.json();
                 const pokemonNames = data.pokemon_species.map((pokemon) => pokemon.name);
+                if(!response.ok){
+                    console.log("not okay");
+                }
 
                 const pokemonData = await Promise.all(
                     pokemonNames.map(async (name) => {
@@ -24,6 +29,7 @@ function PokeRivals() {
                 );
 
                 setPokemons(pokemonData.filter(Boolean));
+               
             } catch (error) {
                 console.error(error);
             }
@@ -31,7 +37,8 @@ function PokeRivals() {
 
         fetchPoke();
     }, []);
-
+    
+    console.log(pokemons);
     return (
         <div className="flex flex-col items-center bg-gradient-to-b from-red-600 via-yellow-400 to-blue-600 min-h-screen p-6 text-white">
             {/* Header */}
@@ -50,7 +57,7 @@ function PokeRivals() {
                         alt={selectedPokemon.name}
                         className="w-32 h-32 mx-auto"
                     />
-                    <p className="p-2 bg-amber-400">I choose you!!</p>
+                    <p className="p-2 bg-amber-400 cursor-pointer" onClick={handleClick}>I choose you!!</p>
                 </div>
             )}
 
@@ -60,7 +67,7 @@ function PokeRivals() {
                     <button
                         key={pokemon.name}
                         onClick={() => setSelectedPokemon(pokemon)}
-                        className={`relative flex items-center justify-center p-3 border-4 rounded-xl bg-white shadow-md transition duration-200  hover:scale-110 hover:border-yellow-500 ${
+                        className={`relative flex flex-col items-center justify-center p-3 border-4 rounded-xl bg-white shadow-md transition duration-200  hover:scale-110 hover:border-yellow-500 ${
                             selectedPokemon?.name === pokemon.name
                                 ? "border-yellow-500 scale-110"
                                 : "border-transparent"
