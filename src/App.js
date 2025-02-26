@@ -24,7 +24,7 @@ function App() {
         <PokemonSelection handleClick={handleClick} setPassedImg={setPassedImg} setEnemyPokeImg={setEnemyPokeImg} moves={moves} setMoves={setMoves} /> 
       )}
 
-    {step >= 2 && <PokeRivals sprites={passedimg} bgindex={bgindex} enemysprite={enemypokeimg} moves={moves}/>}
+    {step >= 2 && <PokeRivals sprites={passedimg} bgindex={bgindex} enemysprite={enemypokeimg} moves={moves}  handleClick={handleClick}/>}
     </div>
   );
 }
