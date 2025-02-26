@@ -157,6 +157,9 @@ function PokemonSelection({handleClick,setPassedImg,setEnemyPokeImg,moves,setMov
                     </button>
                 ))}
             </div>
+            <div>
+                
+            </div>
          
 
         </div>
