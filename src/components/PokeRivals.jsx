@@ -6,8 +6,11 @@ import bg3 from "../assets/3.png";
 
 function PokeRivals({ sprites, bgindex, enemysprite, moves, handleClick }) {
     const [moveData, setMoveData] = useState([]);
+    const [compMoveData,setCompData] = useState([])
     const [playerHp, setPlayerHp] = useState(100);
     const [enemyHp, setEnemyHp] = useState(100);
+    const [playerMove,setPlayerMove] = useState('');
+    const [compMove,setCompMove] = useState('');
     
     useEffect(() => {
         const movefetchData = async (moveName) => {
@@ -23,6 +26,11 @@ function PokeRivals({ sprites, bgindex, enemysprite, moves, handleClick }) {
         const fetchAllMoves = async () => {
             const moveDetails = await Promise.all(moves.map(moveName => movefetchData(moveName)));
             setMoveData(moveDetails);
+        };
+
+        const fetchAllCompMoves = async () => {
+            const CompmoveDetails = await Promise.all(moves.map(CompmoveName => movefetchData(CompmoveName)));
+            setMoveData(CompmoveDetails);
         };
 
         fetchAllMoves();
@@ -47,6 +55,8 @@ function PokeRivals({ sprites, bgindex, enemysprite, moves, handleClick }) {
         const attack = 100;
         const defense = 100;
         const power = moveData[index].power;
+        console.log(moveData[index].name)
+        setPlayerMove(moveData[index].name)
 
         const damage = Math.floor((((2 * level / 5 + 2) * power * (attack / defense)) / 50) + 2);
         console.log(`Player dealt ${damage} damage`);
@@ -64,6 +74,7 @@ function PokeRivals({ sprites, bgindex, enemysprite, moves, handleClick }) {
 
         const randomIndex = Math.floor(Math.random() * moveData.length);
         const power = moveData[randomIndex].power;
+        console.log(moveData[randomIndex].name)
 
         const level = 100;
         const attack = 100;
