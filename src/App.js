@@ -9,6 +9,7 @@ function App() {
   const [passedimg, setPassedImg] = useState(null);
   const[enemypokeimg,setEnemyPokeImg]=useState(null);
   const[bgindex,setBgindex]=useState(0);
+  const[moves,setMoves]=useState([]);
   
 
   function handleClick() {
@@ -20,10 +21,10 @@ function App() {
       {step >= 1 && step < 2 && <Background handleClick={handleClick} setBgindex={setBgindex} />} 
       
       {step === 0 && (
-        <PokemonSelection handleClick={handleClick} setPassedImg={setPassedImg} setEnemyPokeImg={setEnemyPokeImg} /> 
+        <PokemonSelection handleClick={handleClick} setPassedImg={setPassedImg} setEnemyPokeImg={setEnemyPokeImg} moves={moves} setMoves={setMoves} /> 
       )}
 
-    {step >= 2 && <PokeRivals sprites={passedimg} bgindex={bgindex} enemysprite={enemypokeimg}/>}
+    {step >= 2 && <PokeRivals sprites={passedimg} bgindex={bgindex} enemysprite={enemypokeimg} moves={moves}/>}
     </div>
   );
 }
