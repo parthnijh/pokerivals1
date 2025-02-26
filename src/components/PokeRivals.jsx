@@ -6,6 +6,7 @@ import bg3 from "../assets/3.png";
 function PokeRivals({ sprites, bgindex, enemysprite, moves }) {
    const[moveData,setMoveData]=useState([]);
    const[playerHp,setPlayerHp]=useState(100);
+   const[enemyHp,setEnemyHp]=useState(100);
    useEffect(()=>{
 
   
@@ -53,8 +54,8 @@ console.log(moveData);
        
         const damage = Math.floor((((2 * level / 5 + 2) * power * (attack / defense)) / 50) + 2);
         console.log(damage);
-       
-        console.log(playerHp-damage)
+        setEnemyHp(Math.max(enemyHp-damage,0))
+        console.log(enemyHp)
 
     }
     
@@ -109,7 +110,7 @@ console.log(moveData);
                 <div className="text-center flex flex-col items-center">
                     {/* Enemy HP Bar */}
                     <div className="w-[200px] bg-gray-300 rounded-full overflow-hidden mb-3 border-4 border-black shadow-md">
-                        <div className="bg-red-500 h-6 w-[100%] rounded-full"></div>
+                        <div className="bg-red-500 h-6 w-[100%] rounded-full" style={{ width: `${enemyHp}%` }}></div>
                     </div>
 
                     {/* Pokémon Image with Animation */}
