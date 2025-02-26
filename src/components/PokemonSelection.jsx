@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Background from "./Background";
 import PokeRivals from "./PokeRivals";
 
-function PokemonSelection({handleClick,setPassedImg,setEnemyPokeImg}) {
+function PokemonSelection({handleClick,setPassedImg,setEnemyPokeImg,moves,setMoves}) {
     const [pokemons, setPokemons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const[showmoves,setShowmoves]=useState(false);
-    const[moves,setMoves]=useState([]);
+   
     
     
 
