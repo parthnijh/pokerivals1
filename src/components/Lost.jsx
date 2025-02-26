@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const PokemonDefeatScreen = () => {
+const PokemonDefeatScreen = ({setStep,setMoves}) => {
   const [smokeOpacity, setSmokeOpacity] = useState(0.5);
   const [pokemonShake, setPokemonShake] = useState(false);
   
@@ -96,12 +96,12 @@ const PokemonDefeatScreen = () => {
       </div>
       
       {/* Try again button */}
-      <button className="mt-8 px-8 py-3 bg-red-600 text-white font-bold rounded-full transform transition hover:scale-110 hover:bg-red-500 focus:outline-none z-10">
+      <button className="mt-8 px-8 py-3 bg-red-600 text-white font-bold rounded-full transform transition hover:scale-110 hover:bg-red-500 focus:outline-none z-10"onClick={()=>{setStep(0);setMoves([])}}>
         Try Again
       </button>
       
       {/* Return to Pokémon Center link */}
-      <button className="mt-4 text-gray-300 underline hover:text-white">
+      <button className="mt-4 text-gray-300 underline hover:text-white" >
         Return to Pokémon Center
       </button>
     </div>

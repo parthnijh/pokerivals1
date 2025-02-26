@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Background from "./Background";
 import PokeRivals from "./PokeRivals";
 
-function PokemonSelection({handleClick, setPassedImg, setEnemyPokeImg, moves, setMoves}) {
+function PokemonSelection({handleClick, setPassedImg, setEnemyPokeImg, moves, setMoves,setEnemyMoves,setPlayerName,setEnemyName}) {
     const [pokemons, setPokemons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
     const [showmoves, setShowmoves] = useState(false);
@@ -31,7 +31,7 @@ function PokemonSelection({handleClick, setPassedImg, setEnemyPokeImg, moves, se
                         return {
                             name: pokeData.name,
                             img: spriteUrl,
-                            moves: pokeData.moves.slice(0, 20).map(m => m.move.name), // Limit to first 20 moves for better display
+                            moves: pokeData.moves.map(m => m.move.name), // Limit to first 20 moves for better display
                         };
                     })
                 );
@@ -50,8 +50,30 @@ function PokemonSelection({handleClick, setPassedImg, setEnemyPokeImg, moves, se
         if (pokemons.length > 0) {
             let compPoke = Math.floor(Math.random() * pokemons.length);
             setEnemyPokeImg(pokemons[compPoke].img);
+            setEnemyName(pokemons[compPoke].name);
+    
+            let allMoves = pokemons[compPoke].moves || []; // Ensure moves exist
+            if (allMoves.length === 0) return; // Prevent errors if no moves are available
+    
+            // Select 4 unique random moves using an array
+            let selectedMoves = [];
+            let usedIndexes = [];
+    
+            while (selectedMoves.length < 4 && usedIndexes.length < allMoves.length) {
+                let randomIndex = Math.floor(Math.random() * allMoves.length);
+                if (!usedIndexes.includes(randomIndex)) {
+                    selectedMoves.push(allMoves[randomIndex]);
+                    usedIndexes.push(randomIndex);
+                }
+            }
+    
+            console.log("Selected enemy moves:", selectedMoves);
+            setEnemyMoves(selectedMoves);
         }
-    }, [pokemons]);  // Runs when pokemons array is updated
+    }, [pokemons]);
+    
+   
+     // Runs when pokemons array is updated
     
     const handleMoveSelection = (move) => {
         // Fixed the move selection logic to prevent duplicates and ensure it works consistently
@@ -152,6 +174,7 @@ function PokemonSelection({handleClick, setPassedImg, setEnemyPokeImg, moves, se
                     </div>
                 ) : (
                     selectedPokemon && (
+                       
                         <div className="mb-8 p-5 border-2 border-blue-400 rounded-lg bg-gray-900 bg-opacity-80 shadow-lg max-w-xs mx-auto transform transition-all hover:scale-105"
                              style={{boxShadow: '0 0 20px rgba(66, 153, 225, 0.6)'}}>
                             <h2 className="text-2xl font-bold text-center uppercase mb-2 text-blue-300"
@@ -184,7 +207,7 @@ function PokemonSelection({handleClick, setPassedImg, setEnemyPokeImg, moves, se
                     {pokemons.map((pokemon) => (
                         <button
                             key={pokemon.name}
-                            onClick={() => {setSelectedPokemon(pokemon);}}
+                            onClick={() => {setSelectedPokemon(pokemon); setPlayerName(pokemon.name)}}
                             className={`relative flex flex-col items-center justify-center p-3 border-2 rounded-lg bg-gray-800 bg-opacity-70 shadow-md transition duration-300 transform hover:scale-105 hover:bg-gray-700 ${
                                 selectedPokemon?.name === pokemon.name
                                     ? "border-blue-400 bg-blue-900 bg-opacity-40 scale-105 shadow-lg shadow-blue-500/40"
