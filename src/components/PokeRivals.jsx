@@ -32,7 +32,11 @@ function PokeRivals({ sprites, bgindex, enemysprite, moves, setStep, enemymoves,
         };
 
         fetchAllMoves();
+ 
         fetchAllCompMoves();
+  
+
+        
     }, [moves, enemymoves]);
 
     useEffect(() => {
@@ -165,6 +169,7 @@ function PokeRivals({ sprites, bgindex, enemysprite, moves, setStep, enemymoves,
                 {/* Move buttons - positioned to avoid being covered by battle log */}
                 <div className="grid grid-cols-2 gap-3 w-[45%]">
                     {moves.map((move, index) => (
+                        
                         <button 
                             key={index} 
                             className="px-4 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold rounded-lg shadow-lg hover:from-yellow-600 hover:to-yellow-700 transition-all transform hover:scale-105 border-2 border-yellow-300 capitalize"
