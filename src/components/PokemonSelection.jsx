@@ -5,6 +5,8 @@ import PokeRivals from "./PokeRivals";
 function PokemonSelection({handleClick,setPassedImg,setEnemyPokeImg}) {
     const [pokemons, setPokemons] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
+    const[showmoves,setShowmoves]=useState(false);
+    const[moves,setMoves]=useState([]);
     
     
 
@@ -26,10 +28,11 @@ function PokemonSelection({handleClick,setPassedImg,setEnemyPokeImg}) {
                         return {
                             name: pokeData.name,
                             img: pokeData.sprites.front_default,
+                            moves:pokeData.moves.map(m=>m.move.name),
                         };
                     })
                 );
-
+ 
                 setPokemons(pokemonData.filter(Boolean));
                
             } catch (error) {
@@ -55,30 +58,83 @@ function PokemonSelection({handleClick,setPassedImg,setEnemyPokeImg}) {
             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-black drop-shadow-lg">
                 Select Your Pokémon!
             </h1>
+            <div className="grid grid-cols-2 gap-3 mt-4">
+               
+                                {moves.length > 0  ? (
+
+                                        moves.map((move, index) => (
+                                            
+                                                <div key={index} className="p-2 bg-gray-800 text-white text-center rounded-md">
+                                                    <p>{index+1}/4</p>
+                                                    <button>{move}</button> 
+                                                </div>
+                                            ))
+                                 ) : (
+                                                showmoves ?<p className="text-white">No moves selected yet.</p>:""
+                                )}
+                            
+            </div>
+            <>
+            {moves.length===4 && showmoves? (
+                                <div><button  className=" m-2 p-5 bg-gray-800 text-white text-center rounded-md" onClick={handleClick}>Proceed</button></div>
+                            ) :""
+                            }
+            </>
 
             {/* Selected Pokémon Display */}
-            {selectedPokemon &&
-            
-            (
-                  
-                
-                <div className="mb-6 p-4 border-4 border-white rounded-lg bg-black bg-opacity-70 shadow-lg">
+
+           
+            {showmoves ? (
+                <div className="mb-6 p-6 border-4 border-white rounded-lg bg-slate-700 shadow-lg w-96">
                     <h2 className="text-2xl font-bold text-center uppercase text-yellow-300">
-                        {selectedPokemon.name}
+                        {selectedPokemon.name} - Moves
                     </h2>
-                    <img
-                        src={selectedPokemon.img}
-                        alt={selectedPokemon.name}
-                        className="w-32 h-32 mx-auto"
-                    />
-                    <p className="p-2 bg-amber-400 cursor-pointer" onClick={() => {
-                            setPassedImg(selectedPokemon.img); // ✅ Send selected image to App.js
-                            handleClick(); // ✅ Move to next step
-                        }}>I choose you!!</p>
-                   
+                    <div className="grid grid-cols-2 gap-3 mt-4">
+                        {selectedPokemon.moves.map((move, index) => (
+                            <div key={index} className="p-2 bg-gray-800 text-white text-center rounded-md cursor-pointer">
+                               <button onClick={()=>{setMoves((prevmoves)=>{
+                                                     if (prevmoves.length >= 4) return prevmoves; // Prevents adding more than 4
+                                                     return [...prevmoves, move];
+                                                });  }} className=""> {move}</button> 
+                               
+                               
+                            </div>
+                            
+                        ))}
+                        <>
+                       
+
+                        
+                               
+                        </>
+                    </div>
                 </div>
-            )
-            }
+            ) : (
+                selectedPokemon && (
+                    <div className="mb-6 p-4 border-4 border-white rounded-lg bg-black bg-opacity-70 shadow-lg">
+                        <h2 className="text-2xl font-bold text-center uppercase text-yellow-300">
+                            {selectedPokemon.name}
+                        </h2>
+                        <img src={selectedPokemon.img} alt={selectedPokemon.name} className="w-32 h-32 mx-auto" />
+                        <p
+                            className="p-2 bg-amber-400 cursor-pointer text-center"
+                            onClick={() => {
+                                setPassedImg(selectedPokemon.img);
+                                setShowmoves(true);
+                                
+                                console.log(selectedPokemon.moves)
+                            }}
+                        >
+                            I choose you!!
+                        </p>
+                    </div>
+                )
+            )}
+           
+
+            
+
+
 
             {/* Pokémon Grid */}
             <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4">
