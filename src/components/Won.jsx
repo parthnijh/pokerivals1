@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const PokemonVictoryScreen = () => {
+const PokemonVictoryScreen = ({setStep,setMoves}) => {
   const [showStars, setShowStars] = useState(true);
   const [rotateVal, setRotateVal] = useState(0);
   
@@ -82,7 +82,7 @@ const PokemonVictoryScreen = () => {
       </div>
       
       {/* Continue button */}
-      <button className="mt-8 px-8 py-3 bg-yellow-400 text-blue-900 font-bold rounded-full transform transition hover:scale-110 hover:bg-yellow-300 focus:outline-none z-10">
+      <button className="mt-8 px-8 py-3 bg-yellow-400 text-blue-900 font-bold rounded-full transform transition hover:scale-110 hover:bg-yellow-300 focus:outline-none z-10 "onClick={()=>{setStep(0);setMoves([])}}>
         Continue
       </button>
       
